@@ -1,0 +1,6 @@
+postgresql==14.1.1
+python==3.9
+django==4.0
+django-cors-headers==3.10.1
+djangorestframework==3.13.1
+psycopg==2-2.9.3
