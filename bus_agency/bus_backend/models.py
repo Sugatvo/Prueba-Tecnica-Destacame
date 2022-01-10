@@ -44,7 +44,7 @@ class Seat(models.Model):
         unique_together = ('bus', 'sequence_number',)
 
 
-class BusOnRoute(models.Model):
+class Trip(models.Model):
     route = models.ForeignKey(Route, on_delete=models.CASCADE)
     bus = models.ForeignKey(Bus, on_delete=models.CASCADE)
     departure_time = models.DateTimeField()
@@ -65,6 +65,6 @@ class Passenger(models.Model):
 
 
 class Ticket(models.Model):
-    bus_on_route = models.ForeignKey(BusOnRoute, on_delete=models.CASCADE)
+    trip = models.ForeignKey(Trip, on_delete=models.CASCADE)
     seat = models.ForeignKey(Seat, on_delete=models.CASCADE)
     passenger = models.ForeignKey(Passenger, on_delete=models.CASCADE)
