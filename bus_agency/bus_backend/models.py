@@ -7,6 +7,7 @@ from django.core.validators import (
 
 
 class Station(models.Model):
+    name = models.CharField(max_length=255)
     street_address = models.CharField(max_length=255)
     city = models.CharField(max_length=28)
 
