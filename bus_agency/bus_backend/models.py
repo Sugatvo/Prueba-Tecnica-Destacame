@@ -7,17 +7,24 @@ from django.core.validators import (
 
 
 class Station(models.Model):
-    street_address = models.CharField()
+    street_address = models.CharField(max_length=255)
     city = models.CharField(max_length=28)
 
 
 class Route(models.Model):
-    from_station = models.ForeignKey(Station, on_delete=models.CASCADE)
-    to_station = models.ForeignKey(Station, on_delete=models.CASCADE)
+    from_station = models.ForeignKey(
+        Station,
+        on_delete=models.CASCADE,
+        related_name="from_station")
+
+    to_station = models.ForeignKey(
+        Station,
+        on_delete=models.CASCADE,
+        related_name="to_station")
 
 
 class Bus(models.Model):
-    driver = models.ForeignKey(User, on_delete=models.SET_NULL)
+    driver = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
 
 
 class Seat(models.Model):
