@@ -25,7 +25,13 @@ class Route(models.Model):
 
 
 class Bus(models.Model):
-    driver = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    driver = models.ForeignKey(
+        User,
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True)
+    type = models.CharField(max_length=255, default="Modelo FSO 1701 con retardador incorporado")
+    manufacturer = models.CharField(max_length=255, default="Yutong")
 
 
 class Seat(models.Model):
