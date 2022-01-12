@@ -30,7 +30,9 @@ class Bus(models.Model):
         on_delete=models.SET_NULL,
         blank=True,
         null=True)
-    type = models.CharField(max_length=255, default="Modelo FSO 1701 con retardador incorporado")
+    type = models.CharField(
+        max_length=255,
+        default="Modelo FSO 1701 con retardador incorporado")
     manufacturer = models.CharField(max_length=255, default="Yutong")
 
 

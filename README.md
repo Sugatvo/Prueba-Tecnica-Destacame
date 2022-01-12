@@ -7,11 +7,13 @@ Una agencia de buses necesita una plataforma para gestionar sus viajes. El siste
 ## Supuestos 
 
 * La agencia de buses sólo realiza viajes entre ciudades de Chile.
-* La agencia tiene locales comerciales y espacios en todos los terminales de buses municipales del país. 
+* La agencia ofrece sus servicios en 15 terminales de buses a lo largo del país. 
+* La agencia cuenta con 30 buses y 30 conductores habilitados para realizar los viajes.
+* Todos los buses cuentan con las condiciones técnicas y de seguridad para realizar los viajes.
 * Los trayectos son entre dos terminales de forma directa y sin recolectar pasajeros en puntos intermedios. 
 * Un usuario de tipo "adminitrador" es el encargado de realizar la carga de trayectos.
-* No existe una acción de pago cuando un usuario reserva el asiento de un bus en un trayecyo y horario particular. 
-* El telefono del pasajero no puede ser un telefono fijo.
+* No existe una acción de pago cuando un usuario reserva el asiento de un bus en un trayecto y horario particular. 
+* Un pasajero tiene que iniciar sesión con una cuenta registrada en el sistema para poder reservar asientos.
 
 
 ## Instalación
