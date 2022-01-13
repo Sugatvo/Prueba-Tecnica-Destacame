@@ -12,6 +12,33 @@ from bus_backend.models import (
 )
 
 
+class PassengerSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(write_only=True)
+    tickets = serializers.PrimaryKeyRelatedField(
+        many=True,
+        read_only=True)
+
+    class Meta:
+        model = User
+        fields = [
+            'id',
+            'username',
+            'first_name',
+            'last_name',
+            'email',
+            'tickets',
+            'password'
+            ]
+
+    def create(self, validated_data):
+        user = super(PassengerSerializer, self).create(validated_data)
+        user.set_password(validated_data['password'])
+        user.save()
+        passenger_group = Group.objects.get(name='Passenger')
+        passenger_group.user_set.add(user)
+        return user
+
+
 class PermissionSerializer(serializers.HyperlinkedModelSerializer):
     content_type = serializers.PrimaryKeyRelatedField(
         many=False,
@@ -107,9 +134,10 @@ class TicketSerializer(serializers.ModelSerializer):
         many=False,
         queryset=Seat.objects.all(),
         )
+
     passenger = serializers.PrimaryKeyRelatedField(
         many=False,
-        queryset=User.objects.all()
+        read_only=True
         )
 
     class Meta:
