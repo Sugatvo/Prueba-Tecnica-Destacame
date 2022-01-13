@@ -1,51 +1,17 @@
-from django.urls import path
+from django.urls import path, include
 from bus_backend import views
-from rest_framework.urlpatterns import format_suffix_patterns
+from rest_framework.routers import DefaultRouter
+
+# Create a router and register our viewsets with it.
+router = DefaultRouter()
+router.register(r'passengers', views.PassengerViewSet, basename='passenger')
+router.register(r'drivers', views.DriverViewSet, basename='driver')
+router.register(r'stations', views.StationViewSet)
+router.register(r'routes', views.RouteViewSet)
+router.register(r'buses', views.BusViewSet)
+router.register(r'trips', views.TripViewSet)
+router.register(r'tickets', views.TicketViewSet)
 
 urlpatterns = [
-    path('', views.api_root),
-    path('passenger/',
-         views.PassengerList.as_view(),
-         name="passenger-list"),
-    path('passenger/<int:pk>/',
-         views.PassengerDetail.as_view(),
-         name="passenger-detail"),
-    path('stations/',
-         views.StationList.as_view(),
-         name="station-list"),
-    path('stations/<int:pk>/',
-         views.StationDetail.as_view(),
-         name="station-detail"),
-    path('routes/',
-         views.RouteList.as_view(),
-         name="route-list"),
-    path('routes/<int:pk>/',
-         views.RouteDetail.as_view(),
-         name="route-detail"),
-    path('buses/',
-         views.BusList.as_view(),
-         name="bus-list"),
-    path('buses/<int:pk>/',
-         views.BusDetail.as_view(),
-         name="bus-detail"),
-    path('seats/',
-         views.SeatList.as_view(),
-         name="seat-list"),
-    path('seats/<int:pk>/',
-         views.SeatDetail.as_view(),
-         name="seat-detail"),
-    path('trips/',
-         views.TripList.as_view(),
-         name="trip-list"),
-    path('trips/<int:pk>/',
-         views.TripDetail.as_view(),
-         name="trip-detail"),
-    path('tickets/',
-         views.TicketList.as_view(),
-         name="ticket-list"),
-    path('tickets/<int:pk>/',
-         views.TicketDetail.as_view(),
-         name="ticket-detail"),
+    path('', include(router.urls)),
 ]
-
-urlpatterns = format_suffix_patterns(urlpatterns)
