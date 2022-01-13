@@ -1,6 +1,4 @@
-from django.contrib.auth.models import Permission, Group, User
-from django.contrib.contenttypes.models import ContentType
-from django.db.models import fields
+from django.contrib.auth.models import Group, User
 from rest_framework import serializers
 from bus_backend.models import (
     Station,
@@ -39,54 +37,42 @@ class PassengerSerializer(serializers.ModelSerializer):
         return user
 
 
-class PermissionSerializer(serializers.HyperlinkedModelSerializer):
-    content_type = serializers.PrimaryKeyRelatedField(
-        many=False,
-        queryset=ContentType.objects.all(),
-        )
+class DriverSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(write_only=True)
 
     class Meta:
-        model = Permission
+        model = User
         fields = [
-            'url',
-            'name',
-            'content_type',
-            'codename',
+            'id',
+            'username',
+            'first_name',
+            'last_name',
+            'email',
+            'password',
             ]
 
-
-class GroupSerializer(serializers.HyperlinkedModelSerializer):
-    permissions = serializers.PrimaryKeyRelatedField(
-        many=True,
-        queryset=Permission.objects.all(),
-        )
-
-    class Meta:
-        model = Group
-        fields = ['url', 'name', 'permissions']
+    def create(self, validated_data):
+        user = super(DriverSerializer, self).create(validated_data)
+        user.set_password(validated_data['password'])
+        user.save()
+        passenger_group = Group.objects.get(name='Driver')
+        passenger_group.user_set.add(user)
+        return user
 
 
 class BusSerializer(serializers.ModelSerializer):
     driver = serializers.PrimaryKeyRelatedField(
         many=False,
-        queryset=User.objects.all(),
-        required=False
+        queryset=User.objects.filter(groups__name='Driver'),
+        required=False,
         )
+    seats = serializers.PrimaryKeyRelatedField(
+        many=True,
+        read_only=True)
 
     class Meta:
         model = Bus
-        fields = ['id', 'driver', 'type', 'manufacturer']
-
-
-class SeatSerializer(serializers.ModelSerializer):
-    bus = serializers.PrimaryKeyRelatedField(
-        many=False,
-        queryset=Bus.objects.all(),
-        )
-
-    class Meta:
-        model = Seat
-        fields = ['id', 'bus', 'sequence_number']
+        fields = ['id', 'driver', 'type', 'manufacturer', 'seats']
 
 
 class StationSerializer(serializers.ModelSerializer):
@@ -142,4 +128,4 @@ class TicketSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Ticket
-        fields = ['trip', 'seat', 'passenger']
+        fields = ['id', 'trip', 'seat', 'passenger']
