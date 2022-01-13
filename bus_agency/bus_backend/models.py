@@ -54,4 +54,10 @@ class Trip(models.Model):
 class Ticket(models.Model):
     trip = models.ForeignKey(Trip, on_delete=models.CASCADE)
     seat = models.ForeignKey(Seat, on_delete=models.CASCADE)
-    passenger = models.ForeignKey(User, on_delete=models.CASCADE)
+    passenger = models.ForeignKey(
+        User,
+        related_name='tickets',
+        on_delete=models.CASCADE)
+
+    class Meta:
+        unique_together = ('trip', 'seat',)
