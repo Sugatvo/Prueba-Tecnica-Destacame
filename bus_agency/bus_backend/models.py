@@ -37,7 +37,10 @@ class Bus(models.Model):
 
 
 class Seat(models.Model):
-    bus = models.ForeignKey(Bus, on_delete=models.CASCADE)
+    bus = models.ForeignKey(
+        Bus,
+        on_delete=models.CASCADE,
+        related_name='seats')
     sequence_number = models.PositiveSmallIntegerField(
         validators=[MinValueValidator(1), MaxValueValidator(10)])
 
