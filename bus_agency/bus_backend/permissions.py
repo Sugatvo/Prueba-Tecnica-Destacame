@@ -4,31 +4,33 @@ from rest_framework import permissions
 class PassengerPermissions(permissions.BasePermission):
     def has_permission(self, request, view):
         # Read permissions are allowed for manager or admin users
-        if request.method in permissions.SAFE_METHODS and view.action == 'list':
+        if (request.method in permissions.SAFE_METHODS
+                and view.action == 'list'):
             return (
                 request.user.groups.filter(name='Manager').exists()
                 or request.user.is_superuser
             )
         # Pass retrieve action to check object-level permissions
-        elif request.method in permissions.SAFE_METHODS and view.action == 'retrieve':
+        elif (request.method in permissions.SAFE_METHODS
+                and view.action == 'retrieve'):
             return True
         elif request.method == 'POST':
             # Create is allowed only for anonymous or admin users
             return request.user.is_anonymous or request.user.is_superuser
-        elif request.method == 'PUT':
-            if request.user.has_perm(f'bus_backend.change_user'):
-                return True
-        elif request.method == 'PATCH':
-            if request.user.has_perm(f'bus_backend.change_user'):
-                return True
-        elif request.method == 'DELETE':
-            if request.user.has_perm(f'bus_backend.delete_user'):
-                return True
+        elif (request.method == 'PUT'
+                and request.user.has_perm(f'bus_backend.change_user')):
+            return True
+        elif (request.method == 'PATCH'
+                and request.user.has_perm(f'bus_backend.change_user')):
+            return True
+        elif (request.method == 'DELETE'
+                and request.user.has_perm(f'bus_backend.delete_user')):
+            return True
         else:
             return False
 
     def has_object_permission(self, request, view, obj):
-        # Read and Write permissions are allowed only for owner or admin
+        # Read and write permissions are allowed only for owner or admin
         return obj == request.user or request.user.is_superuser
 
 
@@ -47,15 +49,15 @@ class DriverPermissions(permissions.BasePermission):
                 request.user.groups.filter(name='Manager').exists()
                 or request.user.is_superuser
             )
-        elif request.method == 'PUT':
-            if request.user.has_perm(f'bus_backend.change_user'):
-                return True
-        elif request.method == 'PATCH':
-            if request.user.has_perm(f'bus_backend.change_user'):
-                return True
-        elif request.method == 'DELETE':
-            if request.user.has_perm(f'bus_backend.delete_user'):
-                return True
+        elif (request.method == 'PUT'
+                and request.user.has_perm(f'bus_backend.change_user')):
+            return True
+        elif (request.method == 'PATCH'
+                and request.user.has_perm(f'bus_backend.change_user')):
+            return True
+        elif (request.method == 'DELETE'
+                and request.user.has_perm(f'bus_backend.delete_user')):
+            return True
         else:
             return False
 
@@ -71,18 +73,18 @@ class ModelPermissions(permissions.BasePermission):
         # Read permissions are allowed for everyone
         if request.method in permissions.SAFE_METHODS:
             return True
-        elif request.method == 'POST':
-            if request.user.has_perm(f'bus_backend.add_{self.model}'):
-                return True
-        elif request.method == 'PUT':
-            if request.user.has_perm(f'bus_backend.change_{self.model}'):
-                return True
-        elif request.method == 'PATCH':
-            if request.user.has_perm(f'bus_backend.change_{self.model}'):
-                return True
-        elif request.method == 'DELETE':
-            if request.user.has_perm(f'bus_backend.delete_{self.model}'):
-                return True
+        elif (request.method == 'POST'
+                and request.user.has_perm(f'bus_backend.add_{self.model}')):
+            return True
+        elif (request.method == 'PUT'
+                and request.user.has_perm(f'bus_backend.change_{self.model}')):
+            return True
+        elif (request.method == 'PATCH'
+                and request.user.has_perm(f'bus_backend.change_{self.model}')):
+            return True
+        elif (request.method == 'DELETE'
+                and request.user.has_perm(f'bus_backend.delete_{self.model}')):
+            return True
         else:
             return False
 
