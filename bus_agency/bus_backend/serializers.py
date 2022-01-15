@@ -1,5 +1,7 @@
 from django.contrib.auth.models import Group, User
+
 from rest_framework import serializers
+
 from bus_backend.models import (
     Station,
     Route,
@@ -12,26 +14,15 @@ from bus_backend.models import (
 
 class PassengerSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
-    tickets = serializers.PrimaryKeyRelatedField(
-        many=True,
-        read_only=True)
+    tickets = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
 
     class Meta:
         model = User
-        fields = [
-            'id',
-            'username',
-            'first_name',
-            'last_name',
-            'email',
-            'tickets',
-            'password'
-            ]
-        extra_kwargs = {
-            'first_name': {'required': True},
-            'last_name': {'required': True},
-            'email': {'required': True}
-            }
+        fields = ['id', 'username', 'first_name',
+                  'last_name', 'email', 'tickets', 'password']
+        extra_kwargs = {'first_name': {'required': True},
+                        'last_name': {'required': True},
+                        'email': {'required': True}}
 
     def create(self, validated_data):
         user = super(PassengerSerializer, self).create(validated_data)
@@ -47,14 +38,8 @@ class DriverSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = [
-            'id',
-            'username',
-            'first_name',
-            'last_name',
-            'email',
-            'password',
-            ]
+        fields = ['id', 'username', 'first_name',
+                  'last_name', 'email', 'password']
 
     def create(self, validated_data):
         user = super(DriverSerializer, self).create(validated_data)
@@ -70,10 +55,8 @@ class BusSerializer(serializers.ModelSerializer):
         many=False,
         queryset=User.objects.filter(groups__name='Driver'),
         required=False,
-        )
-    seats = serializers.PrimaryKeyRelatedField(
-        many=True,
-        read_only=True)
+    )
+    seats = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
 
     class Meta:
         model = Bus
@@ -90,11 +73,11 @@ class RouteSerializer(serializers.ModelSerializer):
     from_station = serializers.PrimaryKeyRelatedField(
         many=False,
         queryset=Station.objects.all(),
-        )
+    )
     to_station = serializers.PrimaryKeyRelatedField(
         many=False,
         queryset=Station.objects.all(),
-        )
+    )
 
     class Meta:
         model = Route
@@ -105,11 +88,11 @@ class TripSerializer(serializers.ModelSerializer):
     route = serializers.PrimaryKeyRelatedField(
         many=False,
         queryset=Route.objects.all(),
-        )
+    )
     bus = serializers.PrimaryKeyRelatedField(
         many=False,
         queryset=Bus.objects.all(),
-        )
+    )
 
     class Meta:
         model = Trip
@@ -120,16 +103,13 @@ class TicketSerializer(serializers.ModelSerializer):
     trip = serializers.PrimaryKeyRelatedField(
         many=False,
         queryset=Trip.objects.all(),
-        )
+    )
     seat = serializers.PrimaryKeyRelatedField(
         many=False,
         queryset=Seat.objects.all(),
-        )
+    )
 
-    passenger = serializers.PrimaryKeyRelatedField(
-        many=False,
-        read_only=True
-        )
+    passenger = serializers.PrimaryKeyRelatedField(many=False, read_only=True)
 
     class Meta:
         model = Ticket

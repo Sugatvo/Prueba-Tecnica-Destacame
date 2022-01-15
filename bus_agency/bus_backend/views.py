@@ -1,11 +1,10 @@
 from django.contrib.auth.models import User
 
-from rest_framework import viewsets
-from rest_framework import permissions
 from rest_framework.authentication import (
-    SessionAuthentication,
-    BasicAuthentication
+    BasicAuthentication,
+    SessionAuthentication
 )
+from rest_framework import permissions, viewsets
 
 from bus_backend.models import (
     Station,
@@ -14,17 +13,6 @@ from bus_backend.models import (
     Ticket,
     Trip
 )
-
-from bus_backend.serializers import (
-    PassengerSerializer,
-    DriverSerializer,
-    StationSerializer,
-    RouteSerializer,
-    BusSerializer,
-    TripSerializer,
-    TicketSerializer,
-)
-
 from bus_backend.permissions import (
     PassengerPermissions,
     DriverPermissions,
@@ -33,6 +21,15 @@ from bus_backend.permissions import (
     BusPermissions,
     TicketPermissions,
     TripPermissions
+)
+from bus_backend.serializers import (
+    PassengerSerializer,
+    DriverSerializer,
+    StationSerializer,
+    RouteSerializer,
+    BusSerializer,
+    TripSerializer,
+    TicketSerializer,
 )
 
 
@@ -60,7 +57,7 @@ class StationViewSet(viewsets.ModelViewSet):
     permission_classes = [
         permissions.IsAuthenticatedOrReadOnly,
         StationPermissions
-        ]
+    ]
 
 
 class RouteViewSet(viewsets.ModelViewSet):
@@ -70,7 +67,7 @@ class RouteViewSet(viewsets.ModelViewSet):
     permission_classes = [
         permissions.IsAuthenticatedOrReadOnly,
         RoutePermissions,
-        ]
+    ]
 
 
 class BusViewSet(viewsets.ModelViewSet):
@@ -80,7 +77,7 @@ class BusViewSet(viewsets.ModelViewSet):
     permission_classes = [
         permissions.IsAuthenticatedOrReadOnly,
         BusPermissions
-        ]
+    ]
 
 
 class TripViewSet(viewsets.ModelViewSet):
@@ -90,7 +87,7 @@ class TripViewSet(viewsets.ModelViewSet):
     permission_classes = [
         permissions.IsAuthenticatedOrReadOnly,
         TripPermissions
-        ]
+    ]
 
 
 class TicketViewSet(viewsets.ModelViewSet):
@@ -100,7 +97,7 @@ class TicketViewSet(viewsets.ModelViewSet):
     permission_classes = [
         permissions.IsAuthenticatedOrReadOnly,
         TicketPermissions
-        ]
+    ]
 
     def perform_create(self, serializer):
         serializer.save(passenger=self.request.user)
