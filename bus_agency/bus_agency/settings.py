@@ -41,7 +41,6 @@ INSTALLED_APPS = [
     'rest_framework',
     'bus_backend.apps.BusBackendConfig',
     'corsheaders',
-    'phonenumber_field',
 ]
 
 MIDDLEWARE = [

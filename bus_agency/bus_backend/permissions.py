@@ -4,11 +4,14 @@ from rest_framework import permissions
 class PassengerPermissions(permissions.BasePermission):
     def has_permission(self, request, view):
         # Read permissions are allowed for manager or admin users
-        if request.method in permissions.SAFE_METHODS:
+        if request.method in permissions.SAFE_METHODS and view.action == 'list':
             return (
                 request.user.groups.filter(name='Manager').exists()
                 or request.user.is_superuser
             )
+        # Pass retrieve action to check object-level permissions
+        elif request.method in permissions.SAFE_METHODS and view.action == 'retrieve':
+            return True
         elif request.method == 'POST':
             # Create is allowed only for anonymous or admin users
             return request.user.is_anonymous or request.user.is_superuser
@@ -25,8 +28,7 @@ class PassengerPermissions(permissions.BasePermission):
             return False
 
     def has_object_permission(self, request, view, obj):
-        # Read and Write permissions are allowed only
-        # for account owner or admin
+        # Read and Write permissions are allowed only for owner or admin
         return obj == request.user or request.user.is_superuser
 
 
@@ -104,6 +106,6 @@ class TripPermissions(ModelPermissions):
 class TicketPermissions(ModelPermissions):
     model = 'ticket'
 
-    # Write permissions are allowed only for ticket owner or superuser
+    # Write and Read permissions are allowed only for ticket owner or superuser
     def has_object_permission(self, request, view, obj):
         return obj.passenger == request.user or request.user.is_superuser
