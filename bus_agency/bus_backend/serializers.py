@@ -27,6 +27,11 @@ class PassengerSerializer(serializers.ModelSerializer):
             'tickets',
             'password'
             ]
+        extra_kwargs = {
+            'first_name': {'required': True},
+            'last_name': {'required': True},
+            'email': {'required': True}
+            }
 
     def create(self, validated_data):
         user = super(PassengerSerializer, self).create(validated_data)
