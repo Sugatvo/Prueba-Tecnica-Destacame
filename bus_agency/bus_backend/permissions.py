@@ -18,13 +18,13 @@ class PassengerPermissions(permissions.BasePermission):
             # Create is allowed only for anonymous or admin users
             return request.user.is_anonymous or request.user.is_superuser
         elif (request.method == 'PUT'
-                and request.user.has_perm(f'bus_backend.change_user')):
+                and request.user.has_perm(f'auth.change_user')):
             return True
         elif (request.method == 'PATCH'
-                and request.user.has_perm(f'bus_backend.change_user')):
+                and request.user.has_perm(f'auth.change_user')):
             return True
         elif (request.method == 'DELETE'
-                and request.user.has_perm(f'bus_backend.delete_user')):
+                and request.user.has_perm(f'auth.delete_user')):
             return True
         else:
             return False
@@ -50,13 +50,13 @@ class DriverPermissions(permissions.BasePermission):
                 or request.user.is_superuser
             )
         elif (request.method == 'PUT'
-                and request.user.has_perm(f'bus_backend.change_user')):
+                and request.user.has_perm(f'auth.change_user')):
             return True
         elif (request.method == 'PATCH'
-                and request.user.has_perm(f'bus_backend.change_user')):
+                and request.user.has_perm(f'auth.change_user')):
             return True
         elif (request.method == 'DELETE'
-                and request.user.has_perm(f'bus_backend.delete_user')):
+                and request.user.has_perm(f'auth.delete_user')):
             return True
         else:
             return False
