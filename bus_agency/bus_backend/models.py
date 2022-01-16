@@ -26,17 +26,17 @@ class Route(models.Model):
 
 
 class Bus(models.Model):
-    driver = models.ForeignKey(
+    driver = models.OneToOneField(
         User,
         on_delete=models.SET_NULL,
         blank=True,
-        null=True
+        null=True,
+        unique=True
     )
-    type = models.CharField(
-        max_length=255,
-        default="Modelo FSO 1701 con retardador incorporado"
-    )
-    manufacturer = models.CharField(max_length=255, default="Yutong")
+    wifi = models.BooleanField(null=False, blank=False, default=True)
+    usb = models.BooleanField(null=False, blank=False, default=True)
+    extra_leg_room = models.BooleanField(null=False, blank=False, default=True)
+    entertainment = models.BooleanField(null=False, blank=False, default=True)
 
 
 class Seat(models.Model):

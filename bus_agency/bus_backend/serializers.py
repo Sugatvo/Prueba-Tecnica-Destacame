@@ -1,4 +1,5 @@
 from django.contrib.auth.models import Group, User
+from django.db import transaction
 
 from rest_framework import serializers
 
@@ -55,12 +56,21 @@ class BusSerializer(serializers.ModelSerializer):
         many=False,
         queryset=User.objects.filter(groups__name='Driver'),
         required=False,
+        allow_null=True,
     )
     seats = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
 
     class Meta:
         model = Bus
-        fields = ['id', 'driver', 'type', 'manufacturer', 'seats']
+        fields = ['id', 'driver', 'seats', 'wifi',
+                  'usb', 'extra_leg_room', 'entertainment']
+
+    def create(self, validated_data):
+        bus = super(BusSerializer, self).create(validated_data)
+        with transaction.atomic():
+            for i in range(10):
+                Seat.objects.create(bus=bus, sequence_number=(i+1))
+        return bus
 
 
 class StationSerializer(serializers.ModelSerializer):
