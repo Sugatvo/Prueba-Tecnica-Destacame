@@ -84,10 +84,30 @@
             "password": "pbkdf2_sha256$320000$IpREm6jttMAFr984wFpRP7$OoGCPtJW3UvlKQcMekQhpzGMZk/OoNnZOcnX9XS56Zg=",
             "last_login": null,
             "is_superuser": false,
-            "username": "driver",
+            "username": "driver_1",
             "first_name": "Driver",
             "last_name": "Test",
-            "email": "driver@test.cl",
+            "email": "driver_1@test.cl",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2022-01-13T21:13:40.290Z",
+            "groups": [
+                1
+            ],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 6,
+        "fields": {
+            "password": "pbkdf2_sha256$320000$IpREm6jttMAFr984wFpRP7$OoGCPtJW3UvlKQcMekQhpzGMZk/OoNnZOcnX9XS56Zg=",
+            "last_login": null,
+            "is_superuser": false,
+            "username": "driver_2",
+            "first_name": "Driver",
+            "last_name": "Test",
+            "email": "driver_2@test.cl",
             "is_staff": false,
             "is_active": true,
             "date_joined": "2022-01-13T21:13:40.290Z",
