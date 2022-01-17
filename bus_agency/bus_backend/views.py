@@ -1,10 +1,14 @@
 from django.contrib.auth.models import User
 
+from django_filters import rest_framework as filters
+
 from rest_framework.authentication import (
     BasicAuthentication,
     SessionAuthentication
 )
 from rest_framework import permissions, viewsets
+from rest_framework.decorators import action
+
 
 from bus_backend.models import (
     Station,
@@ -31,6 +35,8 @@ from bus_backend.serializers import (
     TripSerializer,
     TicketSerializer,
 )
+
+from bus_backend.filters import TripFilter
 
 
 class PassengerViewSet(viewsets.ModelViewSet):
@@ -88,6 +94,8 @@ class TripViewSet(viewsets.ModelViewSet):
         permissions.IsAuthenticatedOrReadOnly,
         TripPermissions
     ]
+    filter_backends = (filters.DjangoFilterBackend,)
+    filter_class = TripFilter
 
 
 class TicketViewSet(viewsets.ModelViewSet):

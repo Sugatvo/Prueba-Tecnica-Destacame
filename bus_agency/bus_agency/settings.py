@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'bus_backend.apps.BusBackendConfig',
     'corsheaders',
+    'django_filters',
 ]
 
 MIDDLEWARE = [
