@@ -116,9 +116,8 @@ class TicketSerializer(serializers.ModelSerializer):
     )
     seat = serializers.PrimaryKeyRelatedField(
         many=False,
-        queryset=Seat.objects.all(),
+        queryset=Seat.objects.all()
     )
-
     passenger = serializers.PrimaryKeyRelatedField(many=False, read_only=True)
 
     class Meta:
