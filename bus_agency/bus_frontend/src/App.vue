@@ -1,22 +1,25 @@
 <template>
   <v-app>
-    <NavBar></NavBar> 
+    <NavBar />
     <v-main>
-      <router-view></router-view>
+      <v-container class="fill-height" fluid>
+        <router-view></router-view>
+      </v-container>
     </v-main>
-    <Footer></Footer>
+    <Footer />
   </v-app>
 </template>
 
 <script>
-import Footer from './components/layout/Footer';
+import Footer from "./components/layout/Footer";
 import NavBar from "./components/layout/NavBar";
+
 export default {
-  name: 'App',
+  name: "App",
 
   components: {
     Footer,
-    NavBar
-  }
+    NavBar,
+  },
 };
 </script>
