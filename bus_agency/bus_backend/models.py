@@ -24,6 +24,9 @@ class Route(models.Model):
         related_name="to_station"
     )
 
+    class Meta:
+        unique_together = ('from_station', 'to_station')
+
 
 class Bus(models.Model):
     driver = models.OneToOneField(
