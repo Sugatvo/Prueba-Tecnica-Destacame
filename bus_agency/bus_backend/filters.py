@@ -14,4 +14,5 @@ class TripFilter(filters.FilterSet):
 
     class Meta:
         model = Trip
-        fields = ('departure_date', 'arrival_date')
+        fields = ('departure_date', 'arrival_date',
+                  'route__from_station', 'route__to_station')
