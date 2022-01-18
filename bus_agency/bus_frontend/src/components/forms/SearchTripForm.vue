@@ -117,7 +117,7 @@
 </template>
 
 <script>
-import TripDataService from "../../services/api.js";
+import TripDataService from "../../services/trip.js";
 
 export default {
   data: () => ({

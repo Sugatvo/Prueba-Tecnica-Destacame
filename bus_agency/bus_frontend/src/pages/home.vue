@@ -12,6 +12,7 @@ export default {
 
   components: {
     SearchTripForm
-  }
+  },
+  props: ['state']
 };
 </script>
