@@ -17,4 +17,9 @@ router.register(r'tickets', views.TicketViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
+    path('csrf/', views.get_csrf, name='api-csrf'),
+    path('session/', views.session_view, name='api-session'),
+    path('whoami/', views.whoami_view, name='api-whoami'),
+    path('login/', views.login_view, name='api-login'),
+    path('logout/', views.logout_view, name='api-logout'),
 ]
