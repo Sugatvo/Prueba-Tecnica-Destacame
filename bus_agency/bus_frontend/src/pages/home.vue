@@ -1,7 +1,7 @@
 <template>
-  <div class="mt-16">
-    <SearchTripForm></SearchTripForm>
-  </div>
+    <v-row align="center" justify="center">
+      <SearchTripForm></SearchTripForm>
+    </v-row>
 </template>
 
 <script>
