@@ -1,8 +1,8 @@
 <template>
-  <v-card elevation="0" max-width="500" class="ml-auto mr-auto">
+  <v-card elevation="0" max-width="500" class="pa-0 pa-sm-3 pb-3 col-sm-8 col-12">
     <router-link to="/" name="Destacame Bus" title="Destacame Bus">
       <v-img
-        src="@/assets/logo.svg"
+        src="@/assets/destacame_bus_logo.svg"
         alt="Destacame Bus Logo"
         contain
         max-height="20vh"
@@ -10,6 +10,7 @@
       >
       </v-img>
     </router-link>
+    <v-card-title><h1  class="pb-4">Iniciar sesión</h1></v-card-title>
     <v-card-text>
       <v-form>
         <v-text-field
@@ -38,12 +39,12 @@
         <v-card-actions class="text--secondary">
           <v-spacer></v-spacer>
           ¿No tienes una cuenta?
-          <router-link to="/" class="pl-2" color="black"
+          <router-link to="/register" class="pl-2" color="black"
             >Registrate acá</router-link
           >
         </v-card-actions>
         <v-btn class="rounded-0" color="black" x-large block dark @click="Login"
-          >Login</v-btn
+          >Ingresar</v-btn
         >
       </v-form>
     </v-card-text>
