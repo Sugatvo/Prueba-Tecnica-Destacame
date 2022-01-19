@@ -1,12 +1,18 @@
 <template>
   <div>
-    <v-app-bar elevation="1" flat>
+    <v-app-bar class="white" elevation="1" flat>
       <span class="hidden-sm-and-up">
         <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
       </span>
-      <v-toolbar-title>
+      <v-toolbar-title class="ml-16">
         <router-link to="/" tag="span" style="cursor: pointer">
-          Destacame Bus
+          <v-img
+            max-height="64"
+            max-width="250"
+            src="@/assets/destacame_bus_logo.svg"
+            alt="Destacame Bus Logo"
+            contain
+          ></v-img>
         </router-link>
       </v-toolbar-title>
       <v-spacer></v-spacer>
@@ -14,18 +20,30 @@
         v-if="!state.isAuthenticated"
         outlined
         to="/login"
-        color="black"
-        tile
+        color="primary"
         large
-        class="unactive hidden-xs-only"
+        rounded
+        class="unactive hidden-xs-only ml-16"
       >
         <v-icon left>mdi-account-circle-outline</v-icon>
-        Acceder
+        Iniciar sesión
+      </v-btn>
+      <v-btn
+        v-if="!state.isAuthenticated"
+        to="/register"
+        color="primary"
+        rounded
+        large
+        depressed
+        class="unactive hidden-xs-only mr-8 ml-4"
+      >
+        <v-icon left>mdi-account-plus</v-icon>
+        Regístrate
       </v-btn>
       <v-btn
         v-if="state.isAuthenticated"
         outlined
-        color="black"
+        color="primary"
         tile
         large
         @click="Logout"
@@ -83,7 +101,7 @@ export default {
         console.log(response);
         console.log(response.data);
         this.state.isAuthenticated = false;
-        this.$emit("get-csrf")
+        this.$emit("get-csrf");
       } catch (error) {
         console.log(error);
       }
