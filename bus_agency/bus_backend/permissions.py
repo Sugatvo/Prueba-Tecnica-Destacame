@@ -63,7 +63,9 @@ class DriverPermissions(permissions.BasePermission):
 
     def has_object_permission(self, request, view, obj):
         # Write permissions are allowed only for account owner or superuser
-        return obj == request.user or request.user.is_superuser
+        return (obj == request.user
+                or request.user.is_superuser
+                or request.user.groups.filter(name='Manager').exists())
 
 
 class ModelPermissions(permissions.BasePermission):

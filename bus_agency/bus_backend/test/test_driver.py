@@ -111,7 +111,7 @@ def test_retrieve_driver_as_anonymous_user(client):
         ('passenger_1', 'password123', status.HTTP_403_FORBIDDEN),
         ('driver_1', 'password123', status.HTTP_200_OK),
         ('driver_2', 'password123', status.HTTP_403_FORBIDDEN),
-        ('manager', 'password123', status.HTTP_403_FORBIDDEN),
+        ('manager', 'password123', status.HTTP_200_OK),
         ('admin', 'password123', status.HTTP_200_OK),
     ]
 )
@@ -137,7 +137,6 @@ def test_update_driver_as_anonymous_user(client, update_driver_data):
     [
         ('passenger_1', 'password123'),
         ('driver_2', 'password123'),
-        ('manager', 'password123'),
     ]
 )
 def test_update_driver_as_authenticated_user_without_permissions(
@@ -156,6 +155,7 @@ def test_update_driver_as_authenticated_user_without_permissions(
     [
         ('driver_1', 'password123'),
         ('admin', 'password123'),
+        ('manager', 'password123'),
     ]
 )
 def test_update_driver_as_authenticated_user_with_permissions(
@@ -187,7 +187,6 @@ def test_partial_update_driver_as_anonymous_user(
     [
         ('passenger_2', 'password123'),
         ('driver_2', 'password123'),
-        ('manager', 'password123'),
     ]
 )
 def test_partial_update_driver_as_authenticated_user_without_permissions(
@@ -206,6 +205,7 @@ def test_partial_update_driver_as_authenticated_user_without_permissions(
     [
         ('driver_1', 'password123'),
         ('admin', 'password123'),
+        ('manager', 'password123'),
     ]
 )
 def test_partial_update_driver_as_authenticated_user_with_permissions(
@@ -238,7 +238,7 @@ def test_destroy_driver_as_anonymous_user(client):
         ('passenger_1', 'password123', status.HTTP_403_FORBIDDEN, 2),
         ('driver_1', 'password123', status.HTTP_204_NO_CONTENT, 1),
         ('driver_2', 'password123', status.HTTP_403_FORBIDDEN, 2),
-        ('manager', 'password123', status.HTTP_403_FORBIDDEN, 2),
+        ('manager', 'password123', status.HTTP_204_NO_CONTENT, 1),
         ('admin', 'password123', status.HTTP_204_NO_CONTENT, 1),
     ]
 )
