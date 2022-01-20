@@ -37,9 +37,7 @@
           tile
         >
         </v-text-field>
-        <v-row v-if="error">
-          <small class="text--danger">{{ this.error }} </small>
-        </v-row>
+        <p v-if="error" class="error--text">{{ this.error }}</p>
         <v-card-actions class="text--secondary">
           <v-spacer></v-spacer>
           ¿No tienes una cuenta?
@@ -65,24 +63,31 @@ export default {
     error: "",
   }),
   methods: {
-    async Login() {
+    async WhoAmI(){
       try {
-        console.log(this.$store.state.csrf);
-        let response = await UserDataService.login(
-          this.username,
-          this.password,
-          this.$store.state.csrf
-        );
-        console.log(response);
+        let response = await UserDataService.whoami();
         this.$store.state.isAuthenticated = true;
-        this.$store.state.username = this.username;
+        this.$store.state.username = response.data.username;
+        this.$store.state.id = response.data.id;
         this.username = "";
         this.password = "";
         this.error = "";
         this.$router.push("/");
       } catch (error) {
         console.log(error);
-        this.error = "Wrong username or password.";
+      }
+    },
+    async Login() {
+      try {
+        await UserDataService.login(
+          this.username,
+          this.password,
+          this.$store.state.csrf
+        );
+        this.WhoAmI();
+      } catch (error) {
+        console.log(error);
+        this.error = "Contraseña o nombre de usuario incorrecto";
       }
     },
   },

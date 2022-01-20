@@ -145,6 +145,24 @@ export default {
     };
   },
   methods: {
+    async WhoAmI() {
+      try {
+        let response = await UserDataService.whoami();
+        this.$store.state.isAuthenticated = true;
+        this.$store.state.username = response.data.username;
+        this.$store.state.id = response.data.id;
+        this.firstname = "";
+        this.lastname = "";
+        this.username = "";
+        this.email = "";
+        this.password_1 = "";
+        this.password_2 = "";
+        this.$router.push("/");
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
     async Login() {
       try {
         console.log(this.$store.state.csrf);
@@ -154,15 +172,7 @@ export default {
           this.$store.state.csrf
         );
         console.log(response);
-        this.$store.state.isAuthenticated = true;
-        this.$store.state.username = this.username;
-        this.firstname = "";
-        this.lastname="";
-        this.username="";
-        this.email="";
-        this.password_1="";
-        this.password_2="";
-        this.$router.push("/");
+        this.WhoAmI();
       } catch (error) {
         console.log(error);
       }
@@ -178,7 +188,7 @@ export default {
         );
         console.log(response);
         if (response.status == "201") {
-            this.Login()
+          this.Login();
         }
       } catch (error) {
         console.log(error);
