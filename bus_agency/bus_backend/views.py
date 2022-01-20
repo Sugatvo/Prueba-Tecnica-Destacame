@@ -1,6 +1,7 @@
 import json
 
 from django.contrib.auth.models import User
+from django.contrib.auth import update_session_auth_hash
 
 from django_filters import rest_framework as filters
 from django.contrib.auth import authenticate, login, logout
@@ -14,7 +15,7 @@ from rest_framework.authentication import (
     BasicAuthentication,
     SessionAuthentication
 )
-from rest_framework import permissions, viewsets
+from rest_framework import permissions, viewsets, generics, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
@@ -42,6 +43,7 @@ from bus_backend.serializers import (
     BusSerializer,
     TripSerializer,
     TicketSerializer,
+    ChangePasswordSerializer
 )
 
 from bus_backend.filters import TripFilter
@@ -166,7 +168,10 @@ def whoami_view(request):
     if not request.user.is_authenticated:
         return JsonResponse({'isAuthenticated': False})
 
-    return JsonResponse({'username': request.user.username})
+    return JsonResponse({
+        'username': request.user.username,
+        'id': request.user.id
+    })
 
 
 @require_POST
@@ -194,3 +199,35 @@ def logout_view(request):
 
     logout(request)
     return JsonResponse({'detail': 'Successfully logged out.'})
+
+
+class ChangePasswordView(generics.UpdateAPIView):
+    queryset = User.objects.all()
+    permission_classes = (permissions.IsAuthenticated,)
+    serializer_class = ChangePasswordSerializer
+
+
+class ChangePasswordView(generics.UpdateAPIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_object(self):
+        user = self.request.user
+        return user
+
+    def update(self, request, *args, **kwargs):
+        user = self.get_object()
+        serializer = ChangePasswordSerializer(data=request.data)
+
+        if serializer.is_valid():
+            old_password = serializer.data.get('old_password')
+            if not user.check_password(old_password):
+                return Response(
+                    {'old_password': ['Wrong password.']},
+                    status=status.HTTP_400_BAD_REQUEST)
+
+            user.set_password(serializer.data.get('new_password'))
+            user.save()
+            update_session_auth_hash(request, user)
+            return Response(status=status.HTTP_200_OK)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

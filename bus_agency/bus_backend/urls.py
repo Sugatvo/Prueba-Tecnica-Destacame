@@ -22,4 +22,6 @@ urlpatterns = [
     path('whoami/', views.whoami_view, name='api-whoami'),
     path('login/', views.login_view, name='api-login'),
     path('logout/', views.logout_view, name='api-logout'),
+    path('change_password/<int:pk>/', views.ChangePasswordView.as_view(),
+         name='auth_change_password'),
 ]
