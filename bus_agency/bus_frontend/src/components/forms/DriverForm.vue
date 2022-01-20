@@ -1,7 +1,6 @@
 <template>
-  <v-card elevation="0" max-width="600" class="ml-auto mr-auto">
-    <v-card-title>Registrate</v-card-title>
-    <v-card-subtitle>Es rápido y fácil</v-card-subtitle>
+  <v-card elevation="2" class="ml-auto mr-auto">
+    <v-card-title>Agregar a chofer</v-card-title>
     <v-card-text>
       <v-form v-model="valid">
         <v-row>
@@ -82,21 +81,28 @@
     </v-card-text>
     <v-card-actions class="justify-center">
       <v-btn
-        block
         tile
-        color="blue-grey darken-4"
+        color="error"
+        class="white--text py-6"
+        @click="closeModal"
+      >
+        Cancel
+      </v-btn>
+      <v-btn
+        tile
+        color="success"
         class="white--text py-6"
         :disabled="!valid"
         @click="Register"
       >
-        Registrar
+        Crear cuenta
       </v-btn>
     </v-card-actions>
   </v-card>
 </template>
 
 <script>
-import UserDataService from "../../services/user.js";
+import DriverDataService from "../../services/driver.js";
 
 export default {
   data() {
@@ -145,42 +151,12 @@ export default {
     };
   },
   methods: {
-    async WhoAmI() {
-      try {
-        let response = await UserDataService.whoami();
-        this.$store.state.isAuthenticated = true;
-        this.$store.state.username = response.data.username;
-        this.$store.state.id = response.data.id;
-        this.$store.state.role = response.data.role;
-        this.firstname = "";
-        this.lastname = "";
-        this.username = "";
-        this.email = "";
-        this.password_1 = "";
-        this.password_2 = "";
-        this.$router.push("/");
-      } catch (error) {
-        console.log(error);
-      }
-    },
-
-    async Login() {
-      try {
-        console.log(this.$store.state.csrf);
-        let response = await UserDataService.login(
-          this.username,
-          this.password_1,
-          this.$store.state.csrf
-        );
-        console.log(response);
-        this.WhoAmI();
-      } catch (error) {
-        console.log(error);
-      }
+    closeModal(){
+        this.$emit('close-modal');
     },
     async Register() {
       try {
-        let response = await UserDataService.register(
+        let response = await DriverDataService.post(
           this.firstname,
           this.lastname,
           this.username,
@@ -188,9 +164,8 @@ export default {
           this.password_1
         );
         console.log(response);
-        if (response.status == "201") {
-          this.Login();
-        }
+        this.$emit('on-success');
+        this.$emit('close-modal');
       } catch (error) {
         console.log(error);
       }

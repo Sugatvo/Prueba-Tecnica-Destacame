@@ -15,6 +15,8 @@
           ></v-img>
         </router-link>
       </v-toolbar-title>
+      <v-tab to="/" v-if="$store.state.role=='Passenger'">Reservar pasaje</v-tab>
+      <v-tab to="/admin_panel" v-if="$store.state.role=='Manager'">Panel de administración</v-tab>
       <v-spacer></v-spacer>
       <v-btn
         v-if="!$store.state.isAuthenticated"
@@ -50,7 +52,7 @@
         </template>
 
         <v-list>
-          <v-list-item link to="/profile">
+          <v-list-item v-if="$store.state.role == 'Passenger'" link to="/profile">
             <v-list-item-icon>
               <v-icon>mdi-account</v-icon>
             </v-list-item-icon>
@@ -113,6 +115,9 @@ export default {
         console.log(response);
         console.log(response.data);
         this.$store.state.isAuthenticated = false;
+        this.$store.state.username = "";
+        this.$store.state.id = "";
+        this.$store.state.role = "";
         this.$emit("get-csrf");
         this.$router.push("/");
       } catch (error) {

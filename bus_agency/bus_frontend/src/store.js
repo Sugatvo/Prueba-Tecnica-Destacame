@@ -8,6 +8,7 @@ export default new Vuex.Store({
         csrf: "",
         isAuthenticated: false,
         username: "",
+        role:"",
         id: ""
     }
 })

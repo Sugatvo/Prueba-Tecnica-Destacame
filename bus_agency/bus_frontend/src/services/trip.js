@@ -1,6 +1,9 @@
 import http from "../http-common";
 
 class TripDataService {
+    get(){
+        return http.get("/trips/");
+    }
     get_departure_cities() {
         return http.get("/routes/departure_cities/");
     }

@@ -69,10 +69,17 @@ export default {
         this.$store.state.isAuthenticated = true;
         this.$store.state.username = response.data.username;
         this.$store.state.id = response.data.id;
+        this.$store.state.role = response.data.role;
         this.username = "";
         this.password = "";
         this.error = "";
-        this.$router.push("/");
+
+        if(response.data.role == "Manager"){
+          this.$router.push("/admin_panel");
+        }
+        else{
+           this.$router.push("/");
+        }
       } catch (error) {
         console.log(error);
       }

@@ -86,6 +86,21 @@ class RouteViewSet(viewsets.ModelViewSet):
     ]
 
     @action(detail=False)
+    def routes_by_city(self, request):
+        routes = (
+            Route.objects.all()
+            .select_related("from_station", "to_station")
+            .only("id", "from_station__city", "to_station__city")
+            .order_by('from_station__city')
+            .values(
+                "id",
+                from_city=F('from_station__city'),
+                to_city=F('to_station__city')
+            )
+        )
+        return Response(routes)
+
+    @action(detail=False)
     def departure_cities(self, request):
         """
         Get all the departure cities available from routes
@@ -168,7 +183,19 @@ def whoami_view(request):
     if not request.user.is_authenticated:
         return JsonResponse({'isAuthenticated': False})
 
+    if request.user.groups.filter(name='Passenger').exists():
+        role = "Passenger"
+    elif request.user.groups.filter(name='Manager').exists():
+        role = "Manager"
+    elif request.user.groups.filter(name='Driver').exists():
+        role = "Driver"
+    elif request.user.is_superuser:
+        role = "Superuser"
+    else:
+        role = None
+
     return JsonResponse({
+        'role': role,
         'username': request.user.username,
         'id': request.user.id
     })

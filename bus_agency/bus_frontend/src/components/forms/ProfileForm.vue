@@ -227,6 +227,7 @@
 
 <script>
 import PassengerDataService from "../../services/passenger.js";
+import AuthenticationService from "../../services/auth.js";
 
 export default {
   data: () => ({
@@ -324,11 +325,22 @@ export default {
       await PassengerDataService.patch(this.$store.state.id, data);
       this.getPassenger();
     },
+    async getCSRF() {
+      try {
+        let response = await AuthenticationService.getCSRF();
+        let csrfToken = response.headers["x-csrftoken"];
+        this.$store.state.csrf = csrfToken;
+      } catch (error) {
+        console.log(error);
+      }
+    },
     async deleteAccount(){
         await PassengerDataService.delete(this.$store.state.id);
         this.$store.state.isAuthenticated = false;
         this.$store.state.username = "";
         this.$store.state.id = "";
+        this.$store.state.role = "";
+        this.getCSRF();
         this.$router.push("/login");
     }
   },
