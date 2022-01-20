@@ -69,6 +69,9 @@ export default {
     };
   },
   methods: {
+      getPassenger(){
+          
+      }
   },
   props: ["state"],
 };

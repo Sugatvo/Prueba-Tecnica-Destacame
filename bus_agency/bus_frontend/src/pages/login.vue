@@ -18,7 +18,7 @@
       lg="6"
       class="pt-16 pb-16"
     >
-      <LoginForm :state="state" />
+      <LoginForm/>
     </v-col>
   </v-row>
 </template>
@@ -32,6 +32,5 @@ export default {
   components: {
     LoginForm,
   },
-  props: ["state"],
 };
 </script>

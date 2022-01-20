@@ -17,7 +17,7 @@
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-btn
-        v-if="!state.isAuthenticated"
+        v-if="!$store.state.isAuthenticated"
         outlined
         to="/login"
         color="primary"
@@ -29,7 +29,7 @@
         Iniciar sesión
       </v-btn>
       <v-btn
-        v-if="!state.isAuthenticated"
+        v-if="!$store.state.isAuthenticated"
         to="/register"
         color="primary"
         rounded
@@ -41,11 +41,11 @@
         Regístrate
       </v-btn>
 
-      <v-menu top :close-on-click="true" v-if="state.isAuthenticated">
+      <v-menu top :close-on-click="true" v-if="$store.state.isAuthenticated">
         <template v-slot:activator="{ on, attrs }">
           <v-btn elevation="0" color="primary" dark v-bind="attrs" v-on="on" rounded text>
             <v-icon left>mdi-account-circle</v-icon>
-            {{state.username}}
+            {{$store.state.username}}
           </v-btn>
         </template>
 
@@ -112,7 +112,7 @@ export default {
         let response = await UserDataService.logout();
         console.log(response);
         console.log(response.data);
-        this.state.isAuthenticated = false;
+        this.$store.state.isAuthenticated = false;
         this.$emit("get-csrf");
         this.$router.push("/");
       } catch (error) {
@@ -122,9 +122,8 @@ export default {
   },
   mounted() {
     console.log("nav bar mounted");
-    console.log(this.state.isAuthenticated);
+    console.log(this.$store.state.isAuthenticated);
   },
-  props: ["state"],
 };
 </script>
 

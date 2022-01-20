@@ -23,3 +23,4 @@ https://www.postgresql.org/download/
 descarga y instalar https://nodejs.org/en/download/
 npm install -g @vue/cli
 npm install axios
+npm install vuex

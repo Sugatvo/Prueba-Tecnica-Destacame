@@ -1,9 +1,9 @@
 <template>
   <v-app>
-    <NavBar :state="state" @get-csrf="getCSRF"/>
+    <NavBar @get-csrf="getCSRF"/>
     <v-main>
       <v-container class="fill-height" fluid>
-        <router-view :state="state"></router-view>
+        <router-view></router-view>
       </v-container>
     </v-main>
     <Footer />
@@ -17,18 +17,10 @@ import AuthenticationService from "./services/auth.js";
 
 export default {
   name: "App",
-
   components: {
     Footer,
     NavBar,
   },
-  data: () => ({
-    state: {
-      csrf: "",
-      isAuthenticated: false,
-      username: "",
-    },
-  }),
   methods: {
     async getCSRF() {
       try {
@@ -36,7 +28,7 @@ export default {
         console.log(response);
         let csrfToken = response.headers["x-csrftoken"];
         console.log(csrfToken);
-        this.state.csrf = csrfToken;
+        this.$store.state.csrf = csrfToken;
       } catch (error) {
         console.log(error);
       }
@@ -47,9 +39,9 @@ export default {
         let data = response.data;
         console.log(response);
         if (data.isAuthenticated) {
-          this.state.isAuthenticated = true;
+          this.$store.state.isAuthenticated = true;
         } else {
-          this.state.isAuthenticated = false;
+          this.$store.state.isAuthenticated = false;
           this.getCSRF();
         }
       } catch (error) {

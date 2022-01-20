@@ -147,14 +147,15 @@ export default {
   methods: {
     async Login() {
       try {
-        console.log(this.state.csrf);
+        console.log(this.$store.state.csrf);
         let response = await UserDataService.login(
           this.username,
           this.password_1,
-          this.state.csrf
+          this.$store.state.csrf
         );
         console.log(response);
-        this.state.isAuthenticated = true;
+        this.$store.state.isAuthenticated = true;
+        this.$store.state.username = this.username;
         this.firstname = "";
         this.lastname="";
         this.username="";
@@ -184,6 +185,5 @@ export default {
       }
     },
   },
-  props: ["state"],
 };
 </script>
