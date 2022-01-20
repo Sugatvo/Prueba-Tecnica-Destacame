@@ -1,13 +1,13 @@
 <template>
   <div>
-    <v-app-bar class="white" elevation="1" flat>
+    <v-app-bar class="white" elevation="1">
       <span class="hidden-sm-and-up">
         <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
       </span>
       <v-toolbar-title class="ml-16">
         <router-link to="/" tag="span" style="cursor: pointer">
           <v-img
-            max-height="64"
+            max-height="32"
             max-width="250"
             src="@/assets/destacame_bus_logo.svg"
             alt="Destacame Bus Logo"
@@ -21,8 +21,8 @@
         outlined
         to="/login"
         color="primary"
-        large
         rounded
+        small
         class="unactive hidden-xs-only ml-16"
       >
         <v-icon left>mdi-account-circle-outline</v-icon>
@@ -33,25 +33,37 @@
         to="/register"
         color="primary"
         rounded
-        large
+        small
         depressed
         class="unactive hidden-xs-only mr-8 ml-4"
       >
         <v-icon left>mdi-account-plus</v-icon>
         Regístrate
       </v-btn>
-      <v-btn
-        v-if="state.isAuthenticated"
-        outlined
-        color="primary"
-        tile
-        large
-        @click="Logout"
-        class="unactive hidden-xs-only"
-      >
-        <v-icon left>mdi-logout</v-icon>
-        Cerrar sesión
-      </v-btn>
+
+      <v-menu top :close-on-click="true" v-if="state.isAuthenticated">
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn elevation="0" color="primary" dark v-bind="attrs" v-on="on" rounded text>
+            <v-icon left>mdi-account-circle</v-icon>
+            {{state.username}}
+          </v-btn>
+        </template>
+
+        <v-list>
+          <v-list-item link to="/profile">
+            <v-list-item-icon>
+              <v-icon>mdi-account</v-icon>
+            </v-list-item-icon>
+            <v-list-item-title>Perfil</v-list-item-title>
+          </v-list-item>
+          <v-list-item link @click="Logout"> 
+            <v-list-item-icon>
+              <v-icon>mdi-logout</v-icon>
+            </v-list-item-icon>
+            <v-list-item-title>Cerrar sesión</v-list-item-title>
+          </v-list-item>
+      </v-list>
+      </v-menu>
     </v-app-bar>
     <v-navigation-drawer v-model="drawer" absolute temporary>
       <v-list nav dense>
@@ -102,6 +114,7 @@ export default {
         console.log(response.data);
         this.state.isAuthenticated = false;
         this.$emit("get-csrf");
+        this.$router.push("/");
       } catch (error) {
         console.log(error);
       }

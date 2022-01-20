@@ -2,7 +2,7 @@
   <v-app>
     <NavBar :state="state" @get-csrf="getCSRF"/>
     <v-main>
-      <v-container class="custom-margin fill-height">
+      <v-container class="fill-height" fluid>
         <router-view :state="state"></router-view>
       </v-container>
     </v-main>
@@ -26,6 +26,7 @@ export default {
     state: {
       csrf: "",
       isAuthenticated: false,
+      username: "",
     },
   }),
   methods: {

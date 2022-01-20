@@ -1,14 +1,22 @@
 <template>
   <v-row>
-    <v-col cols="12" class="hidden-xs" md="6"></v-col>
-
+    <v-col cols="12" class="hidden-sm-and-down pt-16 pb-16" md="6">
+      <v-img
+          src="@/assets/chile.svg"
+          alt="Mapa de chile"
+          max-height="500"
+          max-width="300"
+          class="ml-auto mr-16"
+          contain
+        ></v-img>
+    </v-col>
     <v-col
       cols="12"
-      xs="6"
-      sm="5"
+      xs="12"
+      sm="12"
       md="6"
       lg="6"
-      class="align-self-center d-md-flex"
+      class="pt-16 pb-16"
     >
       <LoginForm :state="state" />
     </v-col>

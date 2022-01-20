@@ -1,16 +1,20 @@
 <template>
-  <v-card elevation="0" max-width="500" class="pa-0 pa-sm-3 pb-3 col-sm-8 col-12">
+  <v-card
+    elevation="0"
+    max-width="500"
+    class="ma-lg-0 ma-md-0 ma-sm-auto ma-auto"
+  >
     <router-link to="/" name="Destacame Bus" title="Destacame Bus">
       <v-img
         src="@/assets/destacame_bus_logo.svg"
         alt="Destacame Bus Logo"
         contain
-        max-height="20vh"
-        class="mb-xs-4 mb-md-8 lg-mb-8 mb-xl-8"
+        max-height="10vh"
+        class="mb-4"
       >
       </v-img>
     </router-link>
-    <v-card-title><h1  class="pb-4">Iniciar sesión</h1></v-card-title>
+    <v-card-title><h1 class="pb-4">Iniciar sesión</h1></v-card-title>
     <v-card-text>
       <v-form>
         <v-text-field
@@ -34,7 +38,7 @@
         >
         </v-text-field>
         <v-row v-if="error">
-          <small class="text--danger">{{this.error}} </small>
+          <small class="text--danger">{{ this.error }} </small>
         </v-row>
         <v-card-actions class="text--secondary">
           <v-spacer></v-spacer>
@@ -71,6 +75,7 @@ export default {
         );
         console.log(response);
         this.state.isAuthenticated = true;
+        this.state.username = this.username;
         this.username = "";
         this.password = "";
         this.error = "";

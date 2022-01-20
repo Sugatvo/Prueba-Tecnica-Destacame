@@ -1,12 +1,12 @@
 <template>
-  <v-footer color="secondary pt-4 mt-auto" paddles>
+  <v-footer color="secondary pt-4 mt-auto" paddles dense>
     <v-container class="pb-4">
       <v-row>
         <v-col cols="12" lg="4">
           <router-link to="/" tag="span" style="cursor: pointer">
             <v-img
               class="ml-auto mr-auto"
-              max-height="64"
+              max-height="32"
               max-width="250"
               src="@/assets/destacame_bus_logo_blank.svg"
               alt="Destacame Bus Logo"
