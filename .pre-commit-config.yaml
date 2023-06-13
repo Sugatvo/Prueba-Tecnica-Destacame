@@ -19,6 +19,8 @@ repos:
             "https://semgrep.dev/p/eslint",
             "--config",
             "https://semgrep.dev/p/django",
+            "--config",
+            "https://semgrep.dev/p/insecure-transport",
             "--error",
             "--skip-unknown-extensions",
           ]
