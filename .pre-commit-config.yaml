@@ -9,14 +9,6 @@ repos:
       - id: end-of-file-fixer
       - id: trailing-whitespace
       - id: mixed-line-ending
-  - repo: https://github.com/PyCQA/bandit
-    rev: "1.7.5"
-    hooks:
-      - id: bandit
-  - repo: https://github.com/Lucas-C/pre-commit-hooks-safety
-    rev: v1.3.1
-    hooks:
-      - id: python-safety-dependencies-check
   - repo: https://github.com/returntocorp/semgrep
     rev: v1.27.0
     hooks:
@@ -51,6 +43,8 @@ repos:
             "https://semgrep.dev/p/secrets",
             "--config",
             "https://semgrep.dev/p/r2c-bug-scan",
+            "--config",
+            "https://semgrep.dev/p/bandit",
             "--error",
             "--skip-unknown-extensions",
           ]
