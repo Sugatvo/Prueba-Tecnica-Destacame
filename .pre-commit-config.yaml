@@ -2,27 +2,29 @@ repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v2.3.0
     hooks:
+      - id: check-byte-order-marker
+      - id: check-case-conflict
+      - id: check-json
       - id: check-yaml
       - id: end-of-file-fixer
       - id: trailing-whitespace
+      - id: mixed-line-ending
   - repo: https://github.com/PyCQA/bandit
     rev: "1.7.5"
     hooks:
       - id: bandit
-  - repo: local
+  - repo: https://github.com/Lucas-C/pre-commit-hooks-safety
+    rev: v1.3.1
     hooks:
-      - id: pylint
-        name: pylint
-        entry: pylint
-        language: system
-        types: [python]
-        args: ["-rn", "-sn"]
+      - id: python-safety-dependencies-check
   - repo: https://github.com/returntocorp/semgrep
-    rev: "v1.27.0"
+    rev: v1.27.0
     hooks:
       - id: semgrep
         args:
           [
+            "--config",
+            "https://semgrep.dev/p/python",
             "--config",
             "https://semgrep.dev/p/eslint",
             "--config",
@@ -36,7 +38,19 @@ repos:
             "--config",
             "https://semgrep.dev/p/r2c-security-audit",
             "--config",
+            "https://semgrep.dev/p/headless-browser",
+            "--config",
             "https://semgrep.dev/p/cwe-top-25",
+            "--config",
+            "https://semgrep.dev/p/owasp-top-ten",
+            "--config",
+            "https://semgrep.dev/p/jwt",
+            "--config",
+            "https://semgrep.dev/p/xss",
+            "--config",
+            "https://semgrep.dev/p/secrets",
+            "--config",
+            "https://semgrep.dev/p/r2c-bug-scan",
             "--error",
             "--skip-unknown-extensions",
           ]
