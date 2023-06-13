@@ -5,18 +5,15 @@ repos:
       - id: check-yaml
       - id: end-of-file-fixer
       - id: trailing-whitespace
-  - repo: https://github.com/psf/black
-    rev: 22.10.0
-    hooks:
-      - id: black
   - repo: https://github.com/PyCQA/bandit
     rev: "1.7.5"
     hooks:
       - id: bandit
-  - repo: https://github.com/pre-commit/mirrors-prettier
-    rev: v2.7.1
+  - repo: https://github.com/returntocorp/semgrep
+    rev: 'v1.27.0'
     hooks:
-      - id: prettier
+      - id: semgrep
+        args: ['--config', 'https://semgrep.dev/p/eslint', '--error', '--skip-unknown-extensions']
   - repo: local
     hooks:
       - id: pylint
