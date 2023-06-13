@@ -10,10 +10,18 @@ repos:
     hooks:
       - id: bandit
   - repo: https://github.com/returntocorp/semgrep
-    rev: 'v1.27.0'
+    rev: "v1.27.0"
     hooks:
       - id: semgrep
-        args: ['--config', 'https://semgrep.dev/p/eslint', '--error', '--skip-unknown-extensions']
+        args:
+          [
+            "--config",
+            "https://semgrep.dev/p/eslint",
+            "--config",
+            "https://semgrep.dev/p/django",
+            "--error",
+            "--skip-unknown-extensions",
+          ]
   - repo: local
     hooks:
       - id: pylint
