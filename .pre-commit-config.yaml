@@ -9,6 +9,14 @@ repos:
     rev: "1.7.5"
     hooks:
       - id: bandit
+  - repo: local
+    hooks:
+      - id: pylint
+        name: pylint
+        entry: pylint
+        language: system
+        types: [python]
+        args: ["-rn", "-sn"]
   - repo: https://github.com/returntocorp/semgrep
     rev: "v1.27.0"
     hooks:
@@ -32,11 +40,3 @@ repos:
             "--error",
             "--skip-unknown-extensions",
           ]
-  - repo: local
-    hooks:
-      - id: pylint
-        name: pylint
-        entry: pylint
-        language: system
-        types: [python]
-        args: ["-rn", "-sn"]
